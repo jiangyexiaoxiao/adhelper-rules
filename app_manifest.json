@@ -1,6 +1,6 @@
 {
-  "version": "0.04.00",
-  "version_code": 27,
+  "version": "0.04.01",
+  "version_code": 28,
   "download_url": "",
-  "note": "红果四种广告类型适配"
+  "note": "直播间广告改上滑关闭 + 经验记录"
 }
