@@ -1,6 +1,6 @@
 {
-  "version": "0.16.10",
-  "version_code": 69,
-  "download_url": "",
-  "note": "0.16.10 构建；APK 由本地/Release 页提供"
+  "version": "0.16.11",
+  "version_code": 70,
+  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.11.apk",
+  "note": "0.16.11 debug 构建；直链约 6.5MB"
 }
