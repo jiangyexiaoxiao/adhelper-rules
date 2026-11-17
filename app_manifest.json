@@ -1,6 +1,6 @@
 {
-  "version": "0.16.13",
-  "version_code": 72,
-  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.13.apk",
-  "note": "0.16.13 debug; splash branding + fast-path window adoption + cloud dual-source review"
+  "version": "0.16.14",
+  "version_code": 73,
+  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.14.apk",
+  "note": "0.16.14 debug; cloud raw early stop + cdn primary + rule coverage UX"
 }
