@@ -1,5 +1,8 @@
-﻿{
-  "version": "v1.0",
-  "note": "广告小帮手内置规则版本",
-  "updated": "2026-11-10"
+{
+  "version": "0.17.00",
+  "file": "rules_override.json",
+  "sha256": "sha256:e9afcc7d72fe2a291ca0d612a22fbd7bdf87ce03cc057f4caeefffd14bcd1146",
+  "min_app": "0.16.00",
+  "size": 18555,
+  "note": "v0.17.00 规则包（清单与规则体版本一致）"
 }

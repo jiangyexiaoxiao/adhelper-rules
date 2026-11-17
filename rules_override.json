@@ -1,0 +1,560 @@
+{
+  "schema": 1,
+  "version": "0.17.00",
+  "updated": "2026-11-17",
+  "defaults": {
+    "matchTimeMs": 3000,
+    "actionMaximum": 1,
+    "verifyDelayMs": 300,
+    "maxChecks": 3,
+    "clickableAncestorDepth": 6,
+    "maxTextLength": 16
+  },
+  "rules": [
+    {
+      "id": "open_ad_skip_global",
+      "name": "开屏广告-全局文本兜底（高召回）",
+      "enabled": true,
+      "priority": 10,
+      "scope": {
+        "apps": [],
+        "appPrefixes": [],
+        "excludeApps": [],
+        "windowTypes": ["APPLICATION"]
+      },
+      "guard": {
+        "requiredMarkers": ["跳过", "广告", "剩余", "倒计时", "秒后继续", "秒可关闭"],
+        "markerMode": "ANY",
+        "requireNonSystemWindow": true,
+        "requireNonIme": true,
+        "requireMasterSwitch": true,
+        "forbiddenWhenNoMarker": ["评论", "选集", "倍速", "弹幕", "分享", "投屏"]
+      },
+      "selector": {
+        "viewIds": [],
+        "viewIdSuffixes": [],
+        "textContains": ["跳过"],
+        "descContains": ["跳过"],
+        "maxTextLength": 10,
+        "visibleToUser": true,
+        "target": "MATCHED_NODE_OR_CLICKABLE_ANCESTOR"
+      },
+      "decision": { "adType": "OPEN_AD", "action": "CLICK_SKIP", "scene": "OPEN_AD" },
+      "gate": { "matchTimeMs": 3000, "actionMaximum": 1 },
+      "verify": {
+        "expectGoneMarkers": ["跳过"],
+        "checkDelayMs": 300,
+        "maxChecks": 3,
+        "onFailure": "DIAG_ONLY"
+      },
+      "recall": {
+        "enabled": true,
+        "mode": "SEQUENTIAL",
+        "maxCandidates": 6,
+        "maxAttempts": 6,
+        "perCandidateMaxChecks": 3,
+        "retryDelayMs": 300,
+        "stopOnFirstConfirmed": true,
+        "candidates": [
+          {
+            "kind": "VIEW_ID_EXACT",
+            "priority": 100,
+            "scene": "OPEN_AD",
+            "viewIds": ["tv_skip", "btn_skip", "skip_btn", "iv_skip", "ad_skip"],
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.25,
+              "maxHeightRatio": 0.15,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "VIEW_ID_SUFFIX",
+            "priority": 90,
+            "scene": "OPEN_AD",
+            "suffixes": ["ms_skipView", "skipView", "skip_view", "skipBtn", "skip_btn", "tv_skip", "btn_skip", "ad_skip", "skip_container"],
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.25,
+              "maxHeightRatio": 0.15,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT", "BOTTOM_RIGHT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "TEXT_ANCHOR",
+            "priority": 80,
+            "scene": "OPEN_AD",
+            "words": ["跳过", "跳过广告", "Skip", "SKIP", "跳过此广告"],
+            "maxTextLength": 10,
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.25,
+              "maxHeightRatio": 0.15,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT", "BOTTOM_RIGHT", "BOTTOM_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "CLOSE_TEXT",
+            "priority": 70,
+            "scene": "OPEN_AD",
+            "words": ["×", "X", "关闭", "关闭广告", "SKIP"],
+            "maxTextLength": 10,
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "SELF_DRAWN_SKIP",
+            "priority": 50,
+            "scene": "OPEN_AD",
+            "viewIds": [],
+            "suffixes": [],
+            "words": [],
+            "maxTextLength": 10,
+            "requireAdMarker": false,
+            "requireStructureChange": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.12,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": false,
+              "maxAncestorDepth": 6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "open_ad_taobao",
+      "name": "淘宝-开屏跳过（高召回）",
+      "enabled": true,
+      "priority": 30,
+      "scope": {
+        "apps": ["com.taobao.taobao"],
+        "appPrefixes": [],
+        "excludeApps": [],
+        "windowTypes": ["APPLICATION"]
+      },
+      "guard": {
+        "requiredMarkers": ["跳过", "广告"],
+        "markerMode": "ANY",
+        "requireNonSystemWindow": true,
+        "requireNonIme": true,
+        "requireMasterSwitch": true,
+        "forbiddenWhenNoMarker": ["评论", "选集", "倍速", "弹幕"]
+      },
+      "selector": {
+        "viewIds": ["com.taobao.taobao:id/tv_skip", "com.taobao.taobao:id/btn_skip"],
+        "textContains": ["跳过"],
+        "descContains": ["跳过"],
+        "maxTextLength": 10,
+        "visibleToUser": true,
+        "target": "MATCHED_NODE_OR_CLICKABLE_ANCESTOR"
+      },
+      "decision": { "adType": "OPEN_AD", "action": "CLICK_SKIP", "scene": "OPEN_AD" },
+      "gate": { "matchTimeMs": 3000, "actionMaximum": 1 },
+      "verify": {
+        "expectGoneMarkers": ["跳过"],
+        "checkDelayMs": 300,
+        "maxChecks": 3,
+        "onFailure": "DIAG_ONLY"
+      },
+      "recall": {
+        "enabled": true,
+        "mode": "SEQUENTIAL",
+        "maxCandidates": 2,
+        "maxAttempts": 2,
+        "perCandidateMaxChecks": 3,
+        "retryDelayMs": 300,
+        "stopOnFirstConfirmed": true,
+        "candidates": [
+          {
+            "kind": "VIEW_ID_EXACT",
+            "priority": 95,
+            "scene": "OPEN_AD",
+            "viewIds": ["com.taobao.taobao:id/tv_skip", "com.taobao.taobao:id/btn_skip", "com.taobao.taobao:id/skip_btn"],
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.25,
+              "maxHeightRatio": 0.15,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "CLOSE_TEXT",
+            "priority": 85,
+            "scene": "OPEN_AD",
+            "words": ["跳过", "关闭", "×"],
+            "maxTextLength": 10,
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hongguo_a_swipe_guide",
+      "name": "红果-A类上滑继续引导",
+      "enabled": true,
+      "priority": 20,
+      "scope": {
+        "apps": [],
+        "appPrefixes": ["com.phoenix.read"],
+        "excludeApps": [],
+        "windowTypes": ["APPLICATION"]
+      },
+      "guard": {
+        "requiredMarkers": ["上滑继续", "滑动继续", "上滑", "广告"],
+        "markerMode": "ANY",
+        "requireNonSystemWindow": true,
+        "requireNonIme": true,
+        "requireMasterSwitch": true,
+        "forbiddenWhenNoMarker": ["评论", "选集", "倍速", "弹幕"]
+      },
+      "selector": {
+        "textContains": ["上滑继续"],
+        "descContains": ["滑动继续"],
+        "maxTextLength": 16,
+        "visibleToUser": true,
+        "target": "MATCHED_NODE_OR_CLICKABLE_ANCESTOR"
+      },
+      "decision": { "adType": "SWIPE_GUIDE_AD", "action": "SWIPE_UP", "scene": "SWIPE_GUIDE" },
+      "gate": { "matchTimeMs": 3000, "actionMaximum": 1 },
+      "verify": {
+        "expectGoneMarkers": ["上滑继续", "滑动继续"],
+        "checkDelayMs": 800,
+        "maxChecks": 3,
+        "onFailure": "DIAG_ONLY"
+      },
+      "recall": {
+        "enabled": true,
+        "mode": "SEQUENTIAL",
+        "maxCandidates": 3,
+        "maxAttempts": 2,
+        "perCandidateMaxChecks": 3,
+        "retryDelayMs": 300,
+        "stopOnFirstConfirmed": true,
+        "candidates": [
+          {
+            "kind": "SELF_DRAWN_SWIPE",
+            "priority": 120,
+            "scene": "SWIPE_GUIDE",
+            "requireStructureChange": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.12,
+              "maxHeightRatio": 0.08,
+              "allowedRegions": ["BOTTOM_RIGHT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": false,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "TEXT_ANCHOR",
+            "priority": 100,
+            "scene": "SWIPE_GUIDE",
+            "words": ["上滑继续", "滑动继续", "上滑"],
+            "maxTextLength": 12,
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.25,
+              "maxHeightRatio": 0.15,
+              "allowedRegions": ["BOTTOM_RIGHT", "BOTTOM_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "CLICKABLE_ANCESTOR",
+            "priority": 80,
+            "scene": "SWIPE_GUIDE",
+            "viewIds": ["swipe_guide_container", "swipe_continue"],
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.25,
+              "maxHeightRatio": 0.15,
+              "allowedRegions": ["BOTTOM_RIGHT", "BOTTOM_LEFT", "CENTER_SMALL"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hongguo_b_live_card",
+      "name": "红果-B类直播卡片",
+      "enabled": true,
+      "priority": 20,
+      "scope": {
+        "apps": [],
+        "appPrefixes": ["com.phoenix.read"],
+        "excludeApps": [],
+        "windowTypes": ["APPLICATION"]
+      },
+      "guard": {
+        "requiredMarkers": ["进入直播间", "直播中", "广告"],
+        "markerMode": "ANY",
+        "requireNonSystemWindow": true,
+        "requireNonIme": true,
+        "requireMasterSwitch": true,
+        "forbiddenWhenNoMarker": ["评论", "选集", "倍速", "弹幕"]
+      },
+      "selector": {
+        "textContains": ["进入直播间"],
+        "descContains": ["关闭"],
+        "maxTextLength": 16,
+        "visibleToUser": true,
+        "target": "MATCHED_NODE_OR_CLICKABLE_ANCESTOR"
+      },
+      "decision": { "adType": "LIVE_CARD_AD", "action": "CLICK_CLOSE", "scene": "LIVE_CARD" },
+      "gate": { "matchTimeMs": 3000, "actionMaximum": 1 },
+      "verify": {
+        "expectGoneMarkers": ["进入直播间", "直播中"],
+        "checkDelayMs": 500,
+        "maxChecks": 3,
+        "onFailure": "DIAG_ONLY"
+      },
+      "recall": {
+        "enabled": true,
+        "mode": "SEQUENTIAL",
+        "maxCandidates": 2,
+        "maxAttempts": 2,
+        "perCandidateMaxChecks": 3,
+        "retryDelayMs": 300,
+        "stopOnFirstConfirmed": true,
+        "candidates": [
+          {
+            "kind": "VIEW_ID_SUFFIX",
+            "priority": 100,
+            "scene": "LIVE_CARD",
+            "suffixes": ["live_card_close", "iv_close", "btn_close"],
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "CLOSE_TEXT",
+            "priority": 80,
+            "scene": "LIVE_CARD",
+            "words": ["关闭", "×", "X"],
+            "maxTextLength": 10,
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hongguo_c_countdown",
+      "name": "红果-C类倒计时（安静等待→已可关闭时点自动关闭）",
+      "enabled": true,
+      "priority": 20,
+      "scope": {
+        "apps": [],
+        "appPrefixes": ["com.phoenix.read"],
+        "excludeApps": [],
+        "windowTypes": ["APPLICATION"]
+      },
+      "guard": {
+        "requiredMarkers": ["秒后继续", "秒可关闭", "倒计时", "广告", "剩余"],
+        "markerMode": "ANY",
+        "requireNonSystemWindow": true,
+        "requireNonIme": true,
+        "requireMasterSwitch": true,
+        "forbiddenWhenNoMarker": ["评论", "选集", "倍速", "弹幕"]
+      },
+      "selector": {
+        "textContains": ["秒后可关闭", "关闭"],
+        "descContains": ["关闭广告"],
+        "maxTextLength": 16,
+        "visibleToUser": true,
+        "target": "MATCHED_NODE_OR_CLICKABLE_ANCESTOR"
+      },
+      "decision": { "adType": "COUNTDOWN_AD", "action": "WAIT_THEN_CLICK_CLOSE", "scene": "COUNTDOWN" },
+      "gate": { "matchTimeMs": 3000, "actionMaximum": 1 },
+      "verify": {
+        "expectGoneMarkers": ["秒后继续", "秒可关闭", "广告"],
+        "checkDelayMs": 500,
+        "maxChecks": 3,
+        "onFailure": "DIAG_ONLY"
+      },
+      "countdown": {
+        "parseRegex": "(\\d+)\\s*[秒s]",
+        "extraMs": 500,
+        "holdDuringWait": true,
+        "maxSeconds": 60
+      },
+      "recall": {
+        "enabled": true,
+        "mode": "SEQUENTIAL",
+        "maxCandidates": 2,
+        "maxAttempts": 2,
+        "perCandidateMaxChecks": 3,
+        "retryDelayMs": 300,
+        "stopOnFirstConfirmed": true,
+        "candidates": [
+          {
+            "kind": "CLOSE_TEXT",
+            "priority": 100,
+            "scene": "COUNTDOWN",
+            "words": ["关闭", "×", "X", "跳过广告"],
+            "maxTextLength": 10,
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "VIEW_ID_SUFFIX",
+            "priority": 80,
+            "scene": "COUNTDOWN",
+            "suffixes": ["countdown_close", "iv_close", "btn_close"],
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hongguo_d_small_window",
+      "name": "红果-D类小窗广告",
+      "enabled": true,
+      "priority": 20,
+      "scope": {
+        "apps": [],
+        "appPrefixes": ["com.phoenix.read"],
+        "excludeApps": [],
+        "windowTypes": ["APPLICATION"]
+      },
+      "guard": {
+        "requiredMarkers": ["广告", "赞助", "Advertisement", "小窗"],
+        "markerMode": "ANY",
+        "requireNonSystemWindow": true,
+        "requireNonIme": true,
+        "requireMasterSwitch": true,
+        "forbiddenWhenNoMarker": ["评论", "选集", "倍速", "弹幕"]
+      },
+      "selector": {
+        "textContains": ["关闭广告"],
+        "descContains": ["关闭"],
+        "maxTextLength": 16,
+        "visibleToUser": true,
+        "target": "MATCHED_NODE_OR_CLICKABLE_ANCESTOR"
+      },
+      "decision": { "adType": "SMALL_WINDOW_AD", "action": "CLICK_CLOSE", "scene": "SMALL_WINDOW" },
+      "gate": { "matchTimeMs": 3000, "actionMaximum": 1 },
+      "verify": {
+        "expectGoneMarkers": ["广告"],
+        "checkDelayMs": 500,
+        "maxChecks": 3,
+        "onFailure": "DIAG_ONLY"
+      },
+      "recall": {
+        "enabled": true,
+        "mode": "SEQUENTIAL",
+        "maxCandidates": 2,
+        "maxAttempts": 2,
+        "perCandidateMaxChecks": 3,
+        "retryDelayMs": 300,
+        "stopOnFirstConfirmed": true,
+        "candidates": [
+          {
+            "kind": "VIEW_ID_SUFFIX",
+            "priority": 100,
+            "scene": "SMALL_WINDOW",
+            "suffixes": ["small_window_close", "ad_close", "iv_close"],
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT", "BOTTOM_RIGHT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          },
+          {
+            "kind": "DESC_ANCHOR",
+            "priority": 80,
+            "scene": "SMALL_WINDOW",
+            "words": ["关闭广告", "关闭"],
+            "maxTextLength": 10,
+            "requireAdMarker": true,
+            "target": {
+              "requireVisibleToUser": true,
+              "maxWidthRatio": 0.15,
+              "maxHeightRatio": 0.10,
+              "allowedRegions": ["TOP_RIGHT", "TOP_LEFT", "BOTTOM_RIGHT"],
+              "allowClickAdBody": false,
+              "requireClickableOrAncestor": true,
+              "maxAncestorDepth": 6
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
