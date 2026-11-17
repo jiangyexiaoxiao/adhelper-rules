@@ -1,6 +1,6 @@
 {
-  "version": "0.16.17",
-  "version_code": 76,
-  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.17.apk",
-  "note": "0.16.17 debug; mirror skip + real tried-list + cold-start restore fix"
+  "version": "0.16.18",
+  "version_code": 77,
+  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.18.apk",
+  "note": "0.16.18 debug; stale CDN forced raw recheck"
 }
