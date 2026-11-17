@@ -1,6 +1,6 @@
 {
-  "version": "0.16.18",
-  "version_code": 77,
-  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.18.apk",
-  "note": "0.16.18 debug; stale CDN forced raw recheck"
+  "version": "0.16.19",
+  "version_code": 78,
+  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.19.apk",
+  "note": "0.16.19 debug; broken CDN manifest cannot hide mirror download url"
 }
