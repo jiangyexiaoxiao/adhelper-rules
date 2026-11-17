@@ -1,6 +1,6 @@
 {
-  "version": "0.16.15",
-  "version_code": 74,
-  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.15.apk",
-  "note": "0.16.15 debug; first-frame rules + build-number arbitration + 10min source health"
+  "version": "0.16.16",
+  "version_code": 75,
+  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.16.apk",
+  "note": "0.16.16 debug; mirror health skip + gcore recheck + cold-start restore fix"
 }
