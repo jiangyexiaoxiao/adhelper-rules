@@ -1,6 +1,6 @@
 {
-  "version": "0.16.20",
-  "version_code": 79,
-  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.20.apk",
-  "note": "0.16.20 debug; usable download url outranks broken higher manifest"
+  "version": "0.16.21",
+  "version_code": 80,
+  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.21.apk",
+  "note": "0.16.21 debug; rules force authoritative recheck + no-root cooldown"
 }
