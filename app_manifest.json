@@ -1,6 +1,6 @@
 {
   "version": "0.16.23",
   "version_code": 82,
-  "download_url": "https://cdn.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.23.apk",
+  "download_url": "https://fastly.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.23.apk",
   "note": "0.16.23 debug; splash session reset + duplicate-action guard + fastly mirror"
 }
