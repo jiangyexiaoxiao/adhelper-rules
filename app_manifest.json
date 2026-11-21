@@ -1,6 +1,6 @@
 {
-  "version": "0.16.23",
-  "version_code": 82,
-  "download_url": "https://fastly.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.23.apk",
-  "note": "0.16.23 debug; splash session reset + duplicate-action guard + fastly mirror"
+  "version": "0.16.38",
+  "version_code": 97,
+  "download_url": "https://fastly.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.38.apk",
+  "note": "0.16.38; separate portrait/landscape swipe logic: landscape native ad overlay is detected by zero text + 1-8 descriptions + 广告 badge, routed as SWIPE_GUIDE structural evidence, waits for countdown then swipes once, and releases when the normal episode page returns"
 }

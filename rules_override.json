@@ -260,7 +260,7 @@
         "enabled": true,
         "mode": "SEQUENTIAL",
         "maxCandidates": 3,
-        "maxAttempts": 2,
+        "maxAttempts": 1,
         "perCandidateMaxChecks": 3,
         "retryDelayMs": 300,
         "stopOnFirstConfirmed": true,
