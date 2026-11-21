@@ -1,6 +1,6 @@
 {
-  "version": "0.16.39",
-  "version_code": 98,
-  "download_url": "https://fastly.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.39.apk",
-  "note": "0.16.39; fix landscape Hongguo shop-card ad with desc=10: keep 1-8 desc rule, add shop-card markers (直播间同价/本商品可用/去领取) as second positive evidence, route to SWIPE_GUIDE, swipe once after countdown and stop when ad disappears"
+  "version": "0.16.40",
+  "version_code": 99,
+  "download_url": "https://fastly.jsdelivr.net/gh/jiangyexiaoxiao/adhelper-rules@main/AdHelper-0.16.40.apk",
+  "note": "0.16.40; close the swipe-ad stats loop: confirm a landscape Hongguo swipe when every baseline ad marker disappears (27->23 nodes no longer blocks CONFIRMED); add desc 9..14 + visible clickable as structural fallback for shop-card ads; verified on device: help_records #287 SWIPE_UP CONFIRMED latency 1864ms"
 }
